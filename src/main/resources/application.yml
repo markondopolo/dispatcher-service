@@ -7,3 +7,9 @@ spring:
   cloud:
     function:
       definition: pack|label
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+    connection-timeout: 5s
