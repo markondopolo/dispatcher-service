@@ -19,6 +19,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.cloud:spring-cloud-function-context'
 	implementation  'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	implementation 'ord.springframework.retry:spring-retry'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
@@ -39,4 +42,17 @@ tasks.named('test') {
 bootBuildImage {
 	imageName = "${project.name}"
 	environment = ["BP_JVM_VERSION": "17.*"]
+}
+
+bootBuildImage {
+	imageName = "${project.name}"
+	environment = ["BP_JVM_VERSION" : "17.*"]
+
+	docker {
+		publishRegistry {
+			username = project.findProperty("registryUsername")
+			password = project.findProperty("registryToken")
+			url = project.findProperty("registryUrl")
+		}
+	}
 }
